@@ -18,9 +18,12 @@ public:
         [[eosio::action]]
         void genrandomint();
 
+        [[eosio::action]]
+        void randomint(uint32_t from, uint32_t to);
+
 
         [[eosio::action]]
-        void notify(name user, uint32_t number, uint32_t v1, uint32_t v2, uint32_t v3, uint32_t v4);
+        void notify(name user, uint32_t number, uint32_t v1);
 
 private:
 
