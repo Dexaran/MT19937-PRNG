@@ -162,6 +162,33 @@ extern "C" void from_seed(uint32_t value)
 
 extern "C" uint32_t rand_u32()
 {
+  char bufDigest[512] = { 0 };
+  uint32_t used = 0 ;
+  string sid = to_string(tapos_block_num());
+  std::memcpy( bufDigest  , sid.c_str(),sid.size () );
+  used += sid.size ();
+  /*
+  std::memcpy( bufDigest+ used , &seed, sizeof( checksum256 ) );
+  used += sizeof( checksum256 );
+  */
+  std::memcpy( bufDigest+ used, sid.c_str(),sid.size () );
+  used += sid.size ();
+
+  std::memcpy( bufDigest+ used, sid.c_str(),sid.size () );
+  used += sid.size ();
+
+  checksum256 digest;
+  digest = sha256( bufDigest, used );
+
+  char buf[128] = {0};
+  int  shots[3] = {0};
+  string sig = "b2cd3ea401d963b6fa75dd776a6397b77aef6623f9fabd4aa5c56f695b309af7";
+  const char *p64 = reinterpret_cast<const char *>(&sig);
+  int offset = 4;
+  uint32_t r = *(uint32_t*) &p64[offset+ 1*8] ;
+
+  from_seed(r) ;
+
   if ( state.index == SIZE ) {
     generate_numbers();
     state.index = 0;
