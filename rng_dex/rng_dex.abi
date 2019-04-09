@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Tue Apr  9 18:52:02 2019",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Tue Apr  9 22:37:35 2019",
     "version": "eosio::abi/1.1",
     "structs": [
         {
@@ -22,17 +22,19 @@
                 {
                     "name": "v1",
                     "type": "uint32"
-                },
+                }
+            ]
+        },
+        {
+            "name": "randomint",
+            "base": "",
+            "fields": [
                 {
-                    "name": "v2",
+                    "name": "from",
                     "type": "uint32"
                 },
                 {
-                    "name": "v3",
-                    "type": "uint32"
-                },
-                {
-                    "name": "v4",
+                    "name": "to",
                     "type": "uint32"
                 }
             ]
@@ -48,6 +50,11 @@
         {
             "name": "notify",
             "type": "notify",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "randomint",
+            "type": "randomint",
             "ricardian_contract": ""
         }
     ],
