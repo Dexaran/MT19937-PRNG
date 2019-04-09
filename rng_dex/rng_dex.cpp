@@ -162,15 +162,14 @@ extern "C" void from_seed(uint32_t value)
 
 extern "C" uint32_t rand_u32()
 {
+  /*
   char bufDigest[512] = { 0 };
   uint32_t used = 0 ;
   string sid = to_string(tapos_block_num());
   std::memcpy( bufDigest  , sid.c_str(),sid.size () );
   used += sid.size ();
-  /*
-  std::memcpy( bufDigest+ used , &seed, sizeof( checksum256 ) );
-  used += sizeof( checksum256 );
-  */
+      //std::memcpy( bufDigest+ used , &seed, sizeof( checksum256 ) );
+      //used += sizeof( checksum256 );
   std::memcpy( bufDigest+ used, sid.c_str(),sid.size () );
   used += sid.size ();
 
@@ -186,6 +185,9 @@ extern "C" uint32_t rand_u32()
   const char *p64 = reinterpret_cast<const char *>(&sig);
   int offset = 4;
   uint32_t r = *(uint32_t*) &p64[offset+ 1*8] ;
+  */
+
+  uint32_t r = uint32_t(tapos_block_num());
 
   from_seed(r) ;
 
@@ -197,7 +199,7 @@ extern "C" uint32_t rand_u32()
   return state.MT_TEMPERED[state.index++];
 }
 
-void rng::notify(name user, uint32_t number, uint32_t v1, uint32_t v2, uint32_t v3, uint32_t v4) {
+void rng::notify(name user, uint32_t number, uint32_t v1) {
     require_auth(get_self());
     // do nothing, just accept arguments for appropriate logging
   }
@@ -213,5 +215,22 @@ void rng::genrandomint()
     ).send();
     state.index++;
 }
+
+void rng::randomint(uint32_t from, uint32_t to)
+{
+  eosio_assert(to >= from, "Max integer must be greater than Min integer");
+  int tmp = rand_u32();
+  if (tmp > to)
+  {
+    tmp = tmp % (to);
+    tmp += from;
+  }
+    action(
+      permission_level(name(get_self()), name("active")),
+      get_self(),
+      name("notify"),
+      std::make_tuple(get_self(), tmp, state.index)
+    ).send();
+}
 // generate .wasm and .wast file
-EOSIO_DISPATCH( rng, (genrandomint)(notify) )
+EOSIO_DISPATCH( rng, (genrandomint)(notify)(randomint) )
