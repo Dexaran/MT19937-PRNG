@@ -1,0 +1,58 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Tue Apr  9 18:52:02 2019",
+    "version": "eosio::abi/1.1",
+    "structs": [
+        {
+            "name": "genrandomint",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "notify",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "number",
+                    "type": "uint32"
+                },
+                {
+                    "name": "v1",
+                    "type": "uint32"
+                },
+                {
+                    "name": "v2",
+                    "type": "uint32"
+                },
+                {
+                    "name": "v3",
+                    "type": "uint32"
+                },
+                {
+                    "name": "v4",
+                    "type": "uint32"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "genrandomint",
+            "type": "genrandomint",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "notify",
+            "type": "notify",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [],
+    "ricardian_clauses": [],
+    "variants": [],
+    "abi_extensions": []
+}
